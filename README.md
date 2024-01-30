@@ -5,13 +5,15 @@ This is a simple implementation of the classic Snake game in Python.
 
 ## Installation
 
-1. Clone this repository: `git clone https://github.com/yourusername/snake-game.git`
-2. Navigate to the project directory: `cd snake-game`
-3. Install the required dependencies: `pip install -r requirements.txt`
+1. Clone this repository: `git clone https://github.com/LambdaFr/TP1-Bornet-CDOF2.git`
+2. Go to the project directory: `cd TP1-Bornet-CDOF2`
+3. Setup the project: `python setup.py install`
+4. Launche the game: `python tp1.py`
 
-## Usage
+## How to play
 
-Run the game using Python:
+For now the game is simple :
+Directionnal keys allow you to go up, down, left and right. You have to eat the red square to grow without touching yourself or the border.
 
 ```bash
-python main.py
+python tp1.py
