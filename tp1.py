@@ -1,43 +1,82 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import pygame
+import sys
+import random
 
-ON = 255
-OFF = 0
-size = 50
-density = 0.2
+# Initialisation de Pygame
+pygame.init()
 
-def initialize_grid(size, density=0.2):
-    grid = np.random.choice([OFF, ON], size=(size, size), p=[1 - density, density])
-    return grid
+# Paramètres du jeu
+width, height = 400, 400
+block_size = 20
+speed = 8
 
-def update(frameNum, img, grid, size):
-    newGrid = grid.copy()
+# Couleurs
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
 
-    for i in range(size):
-        for j in range(size):
-            total = int((grid[i, (j-1)%size] + grid[i, (j+1)%size] +
-                         grid[(i-1)%size, j] + grid[(i+1)%size, j] +
-                         grid[(i-1)%size, (j-1)%size] + grid[(i-1)%size, (j+1)%size] +
-                         grid[(i+1)%size, (j-1)%size] + grid[(i+1)%size, (j+1)%size])/ON)
+# Initialisation de l'écran
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Snake Game")
 
-            if grid[i, j] == ON:
-                if (total < 2) or (total > 3):
-                    newGrid[i, j] = OFF
-            else:
-                if total == 3:
-                    newGrid[i, j] = ON
+# Initialisation du serpent
+snake = [(width // 2, height // 2)]
+snake_direction = (block_size, 0)
 
-    img.set_data(newGrid)
-    grid[:] = newGrid[:]
-    return img
+# Initialisation de la pomme
+apple = (random.randint(0, (width - block_size) // block_size) * block_size,
+         random.randint(0, (height - block_size) // block_size) * block_size)
 
-# Initialisation de la grille
-grid = initialize_grid(size, density)
+# Boucle principale du jeu
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-# Configuration de l'affichage
-fig, ax = plt.subplots()
-img = ax.imshow(grid, interpolation='nearest', cmap='gray')
-ani = animation.FuncAnimation(fig, update, fargs=(img, grid, size), frames=10, interval=200, save_count=50)
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and snake_direction != (block_size, 0):
+        snake_direction = (-block_size, 0)
+    elif keys[pygame.K_RIGHT] and snake_direction != (-block_size, 0):
+        snake_direction = (block_size, 0)
+    elif keys[pygame.K_UP] and snake_direction != (0, block_size):
+        snake_direction = (0, -block_size)
+    elif keys[pygame.K_DOWN] and snake_direction != (0, -block_size):
+        snake_direction = (0, block_size)
 
-plt.show()
+    # Mise à jour de la position du serpent
+    x, y = snake[0]
+    new_head = (x + snake_direction[0], y + snake_direction[1])
+
+    # Vérification des collisions avec les bords
+    if (
+        new_head[0] < 0 or new_head[0] >= width or
+        new_head[1] < 0 or new_head[1] >= height
+    ):
+        pygame.quit()
+        sys.exit()
+
+    snake.insert(0, new_head)
+
+    # Vérification des collisions avec la pomme
+    if new_head == apple:
+        apple = (random.randint(0, (width - block_size) // block_size) * block_size,
+                 random.randint(0, (height - block_size) // block_size) * block_size)
+    else:
+        snake.pop()
+
+    # Effacement de l'écran
+    screen.fill(black)
+
+    # Affichage de la pomme
+    pygame.draw.rect(screen, red, (apple[0], apple[1], block_size, block_size))
+
+    # Affichage du serpent
+    for segment in snake:
+        pygame.draw.rect(screen, white, (segment[0], segment[1], block_size, block_size))
+
+    # Rafraîchissement de l'écran
+    pygame.display.flip()
+
+    # Régulation de la vitesse du serpent
+    pygame.time.Clock().tick(speed)
