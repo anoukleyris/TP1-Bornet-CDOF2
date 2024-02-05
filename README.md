@@ -14,3 +14,9 @@ This is a simple implementation of the classic Snake game in Python.
 
 For now the game is simple :
 Directionnal keys allow you to go up, down, left and right. You have to eat the red square to grow without touching yourself or the border.
+
+## Participation : 
+
+- Joshua Bornet : Headmaster 
+- Anouk Leyris
+- [Add your name if you contribuate to the project]
