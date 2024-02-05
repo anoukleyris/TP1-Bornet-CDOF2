@@ -6,7 +6,7 @@ import random
 pygame.init()
 
 # Paramètres du jeu
-width, height = 600, 600  # agrandissement de l'image, il faut garder des nombres pairs pour que ça fonctionne (issue 2)
+width, height = 1000, 1000  # agrandissement de l'image, il faut garder des nombres pairs pour que ça fonctionne (issue 2)
 block_size = 20
 speed = 8
 
