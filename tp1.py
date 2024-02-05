@@ -64,8 +64,15 @@ while True:
     # Vérification des collisions avec la pomme
     if new_head == apple:
         score += 1  # Incrémentation du score (issue 2)
-        apple = (random.randint(0, (width - block_size) // block_size) * block_size,
-                 random.randint(0, (height - block_size) // block_size) * block_size)
+
+        # Générer une nouvelle position pour la pomme qui ne soit pas sur le serpent (bug 1)
+        while True:
+            apple = (
+                random.randint(0, (width - block_size) // block_size) * block_size,
+                random.randint(0, (height - block_size) // block_size) * block_size,
+            )
+            if apple not in snake:
+                break
     else:
         snake.pop()
 
@@ -89,4 +96,3 @@ while True:
 
     # Régulation de la vitesse du serpent
     pygame.time.Clock().tick(speed)
-
