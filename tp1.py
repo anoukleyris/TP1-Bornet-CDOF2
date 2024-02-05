@@ -60,14 +60,10 @@ while True:
 
     # Vérification des collisions avec la pomme
     if new_head == apple:
-        # Générer une nouvelle position pour la pomme qui ne soit pas sur le serpent (issue 1)
-        while True:
             apple = (
                 random.randint(0, (width - block_size) // block_size) * block_size,
                 random.randint(0, (height - block_size) // block_size) * block_size,
             )
-            if apple not in snake:
-                break
     else:
         snake.pop()
 
