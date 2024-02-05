@@ -110,7 +110,7 @@ while True:
 
     # Affichage du texte "Press Enter to begin" si le jeu est en pause (issue 3)
     if not running and show_start_text:
-        start_text = font.render("Press Enter to begin", True, white)
+        start_text = font.render("Press the touch space to begin", True, white)
         text_x = width // 2 - start_text.get_width() // 2
         text_y = height // 3 - start_text.get_height() // 2  
         screen.blit(start_text, (text_x, text_y))
