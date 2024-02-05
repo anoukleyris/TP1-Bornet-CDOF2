@@ -17,6 +17,6 @@ Directionnal keys allow you to go up, down, left and right. You have to eat the 
 
 ## Authors
 
-Joshua Bornet - Headmaster
-Anouk Leyris
+Joshua Bornet - Headmaster\
+Anouk Leyris\
 Jean-Baptiste Martin
