@@ -60,7 +60,7 @@ while True:
 
     # Vérification des collisions avec la pomme
     if new_head == apple:
-        # Générer une nouvelle position pour la pomme qui ne soit pas sur le serpent (issue 1)
+        # Générer une nouvelle position pour la pomme qui ne soit pas sur le serpent (bug 1)
         while True:
             apple = (
                 random.randint(0, (width - block_size) // block_size) * block_size,
