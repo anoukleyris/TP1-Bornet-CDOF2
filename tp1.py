@@ -6,7 +6,7 @@ import random
 pygame.init()
 
 # Paramètres du jeu
-width, height = 400, 400
+width, height = 1000, 1000  # agrandissement de l'image, il faut garder des nombres pairs pour que ça fonctionne (issue 2)
 block_size = 20
 speed = 8
 
@@ -26,6 +26,9 @@ snake_direction = (block_size, 0)
 # Initialisation de la pomme
 apple = (random.randint(0, (width - block_size) // block_size) * block_size,
          random.randint(0, (height - block_size) // block_size) * block_size)
+
+# Initialisation du score (issue 2)
+score = 0
 
 # Boucle principale du jeu
 while True:
@@ -60,6 +63,8 @@ while True:
 
     # Vérification des collisions avec la pomme
     if new_head == apple:
+        score += 1  # Incrémentation du score (issue 2)
+
         # Générer une nouvelle position pour la pomme qui ne soit pas sur le serpent (bug 1)
         while True:
             apple = (
@@ -80,6 +85,11 @@ while True:
     # Affichage du serpent
     for segment in snake:
         pygame.draw.rect(screen, white, (segment[0], segment[1], block_size, block_size))
+
+    # Affichage du score (issue 2)
+    font = pygame.font.Font(None, 36)
+    score_text = font.render(f"Score: {score}", True, white)
+    screen.blit(score_text, (10, 10))
 
     # Rafraîchissement de l'écran
     pygame.display.flip()
